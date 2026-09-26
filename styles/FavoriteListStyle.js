@@ -43,12 +43,32 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 
+  favoriteCondition: {
+    color: '#666',
+    marginTop: 5,
+    fontSize: 15,
+  },
+
+  loadButton: {
+    backgroundColor: '#2196F3',
+    padding: 10,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 12,
+  },
+
+  loadButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 13,
+  },
+
   removeButton: {
     backgroundColor: '#e53935',
     padding: 10,
     borderRadius: 8,
     alignItems: 'center',
-    marginTop: 12,
+    marginTop: 8,
   },
 
   removeButtonText: {

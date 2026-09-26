@@ -5,6 +5,7 @@ import styles from '../styles/FavoriteListStyle';
 export default function FavoriteList({
   favorites,
   onRemove,
+  onSelect,
 }) {
   return (
     <View style={styles.favoriteContainer}>
@@ -39,6 +40,19 @@ export default function FavoriteList({
             <Text style={styles.favoriteTemperature}>
               {favorite.temperature}°C
             </Text>
+
+            <Text style={styles.favoriteCondition}>
+              {favorite.condition}
+            </Text>
+
+            <Pressable
+              style={styles.loadButton}
+              onPress={() => onSelect(favorite.city)}
+            >
+              <Text style={styles.loadButtonText}>
+                VIEW WEATHER
+              </Text>
+            </Pressable>
 
             <Pressable
               style={styles.removeButton}

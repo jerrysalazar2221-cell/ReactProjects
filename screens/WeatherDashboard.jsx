@@ -48,6 +48,10 @@ export default function WeatherDashboard() {
       const result = await searchWeather(cityName);
 
       setWeather(result);
+
+      if (result) {
+        setCity(result.city);
+      }
     } catch (error) {
       console.log('Weather API Error:', error);
       setWeather(null);
@@ -111,6 +115,11 @@ export default function WeatherDashboard() {
     }
   };
 
+  const selectFavorite = (cityName) => {
+    setCity(cityName);
+    searchCity(cityName);
+  };
+
   return (
     <ScrollView style={styles.container}>
 
@@ -155,11 +164,11 @@ export default function WeatherDashboard() {
 
       ) : weather ? (
 
-       <WeatherCard
-            weather={weather}
-            onAddFavorite={addToFavorites}
-            onRefresh={() => searchCity(weather.city)}
-                />
+        <WeatherCard
+          weather={weather}
+          onAddFavorite={addToFavorites}
+          onRefresh={() => searchCity(weather.city)}
+        />
 
       ) : (
 
@@ -172,6 +181,7 @@ export default function WeatherDashboard() {
       <FavoriteList
         favorites={favorites}
         onRemove={removeFavorite}
+        onSelect={selectFavorite}
       />
 
       <StatusBar style="auto" />
