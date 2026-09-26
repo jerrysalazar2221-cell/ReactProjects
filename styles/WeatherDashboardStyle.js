@@ -8,8 +8,9 @@ const styles = StyleSheet.create({
 
   header: {
     backgroundColor: '#2196F3',
-    padding: 30,
+    paddingHorizontal: 25,
     paddingTop: 60,
+    paddingBottom: 30,
   },
 
   title: {
@@ -20,8 +21,8 @@ const styles = StyleSheet.create({
 
   subtitle: {
     fontSize: 16,
-    color: '#fff',
-    marginTop: 5,
+    color: '#e3f2fd',
+    marginTop: 6,
   },
 
   searchContainer: {
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderWidth: 1,
     borderColor: '#ddd',
-    borderRadius: 10,
+    borderRadius: 12,
     padding: 15,
     fontSize: 16,
   },
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
   searchButton: {
     backgroundColor: '#2196F3',
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 12,
     alignItems: 'center',
     marginTop: 10,
   },
@@ -59,12 +60,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     marginHorizontal: 20,
     padding: 25,
-    borderRadius: 15,
+    borderRadius: 16,
     elevation: 4,
   },
 
   cityName: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
   },
 
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
   },
 
   temperature: {
-    fontSize: 50,
+    fontSize: 52,
     fontWeight: 'bold',
     marginTop: 15,
   },
@@ -92,13 +93,13 @@ const styles = StyleSheet.create({
 
   info: {
     fontSize: 16,
-    marginTop: 8,
+    marginTop: 10,
   },
 
   favoriteButton: {
     backgroundColor: '#2196F3',
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 12,
     alignItems: 'center',
     marginTop: 20,
   },
@@ -106,13 +107,15 @@ const styles = StyleSheet.create({
   favoriteButtonText: {
     color: '#fff',
     fontWeight: 'bold',
+    fontSize: 15,
   },
 
   favoriteContainer: {
     backgroundColor: '#fff',
     margin: 20,
     padding: 20,
-    borderRadius: 15,
+    borderRadius: 16,
+    elevation: 2,
   },
 
   sectionTitle: {
@@ -127,10 +130,10 @@ const styles = StyleSheet.create({
 
   favoriteItem: {
     borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 10,
+    borderColor: '#e0e0e0',
+    borderRadius: 12,
     padding: 15,
-    marginTop: 10,
+    marginTop: 12,
   },
 
   favoriteCity: {
@@ -166,7 +169,8 @@ const styles = StyleSheet.create({
   errorText: {
     textAlign: 'center',
     marginTop: 30,
-    color: 'red',
+    color: '#e53935',
+    fontSize: 16,
   },
 });
 
