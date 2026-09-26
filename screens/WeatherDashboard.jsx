@@ -155,10 +155,11 @@ export default function WeatherDashboard() {
 
       ) : weather ? (
 
-        <WeatherCard
-          weather={weather}
-          onAddFavorite={addToFavorites}
-        />
+       <WeatherCard
+            weather={weather}
+            onAddFavorite={addToFavorites}
+            onRefresh={() => searchCity(weather.city)}
+                />
 
       ) : (
 

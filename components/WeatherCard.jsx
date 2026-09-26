@@ -2,7 +2,11 @@ import { Text, View, Pressable } from 'react-native';
 
 import styles from '../styles/WeatherCardStyle';
 
-export default function WeatherCard({ weather, onAddFavorite }) {
+export default function WeatherCard({
+  weather,
+  onAddFavorite,
+  onRefresh,
+}) {
   return (
     <View style={styles.weatherCard}>
 
@@ -40,6 +44,15 @@ export default function WeatherCard({ weather, onAddFavorite }) {
       >
         <Text style={styles.favoriteButtonText}>
           ❤️ Add to Favorites
+        </Text>
+      </Pressable>
+
+      <Pressable
+        style={styles.refreshButton}
+        onPress={onRefresh}
+      >
+        <Text style={styles.refreshButtonText}>
+          🔄 Refresh Weather
         </Text>
       </Pressable>
 
