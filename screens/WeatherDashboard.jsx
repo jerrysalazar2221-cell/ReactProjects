@@ -10,6 +10,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
+import WeatherCard from '../components/WeatherCard';
+import FavoriteList from '../components/FavoriteList';
+import { searchWeather } from '../services/WeatherAPI';
+
 import styles from '../styles/WeatherDashboardStyle';
 
 export default function WeatherDashboard() {
@@ -41,35 +45,9 @@ export default function WeatherDashboard() {
     try {
       setLoading(true);
 
-      const locationResponse = await fetch(
-        `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
-          cityName
-        )}&count=1&language=en&format=json`
-      );
+      const result = await searchWeather(cityName);
 
-      const locationData = await locationResponse.json();
-
-      if (!locationData.results) {
-        setWeather(null);
-        return;
-      }
-
-      const location = locationData.results[0];
-
-      const weatherResponse = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`
-      );
-
-      const weatherData = await weatherResponse.json();
-
-      setWeather({
-        city: location.name,
-        country: location.country,
-        temperature: weatherData.current.temperature_2m,
-        humidity: weatherData.current.relative_humidity_2m,
-        wind: weatherData.current.wind_speed_10m,
-        weatherCode: weatherData.current.weather_code,
-      });
+      setWeather(result);
     } catch (error) {
       console.log('Weather API Error:', error);
       setWeather(null);
@@ -99,7 +77,10 @@ export default function WeatherDashboard() {
       return;
     }
 
-    const updatedFavorites = [...favorites, weather];
+    const updatedFavorites = [
+      ...favorites,
+      weather,
+    ];
 
     setFavorites(updatedFavorites);
 
@@ -134,6 +115,7 @@ export default function WeatherDashboard() {
     <ScrollView style={styles.container}>
 
       <View style={styles.header}>
+
         <Text style={styles.title}>
           GLOBAL WEATHER
         </Text>
@@ -141,6 +123,7 @@ export default function WeatherDashboard() {
         <Text style={styles.subtitle}>
           Live Weather Dashboard
         </Text>
+
       </View>
 
       <View style={styles.searchContainer}>
@@ -172,50 +155,10 @@ export default function WeatherDashboard() {
 
       ) : weather ? (
 
-        <View style={styles.weatherCard}>
-
-          <Text style={styles.cityName}>
-            {weather.city}
-          </Text>
-
-          <Text style={styles.countryName}>
-            {weather.country}
-          </Text>
-
-          <Text style={styles.temperature}>
-            {weather.temperature}°C
-          </Text>
-
-          <Text style={styles.weatherText}>
-            Current Weather
-          </Text>
-
-          <View style={styles.infoContainer}>
-
-            <Text style={styles.info}>
-              💧 Humidity: {weather.humidity}%
-            </Text>
-
-            <Text style={styles.info}>
-              💨 Wind: {weather.wind} km/h
-            </Text>
-
-            <Text style={styles.info}>
-              🌤️ Weather Code: {weather.weatherCode}
-            </Text>
-
-          </View>
-
-          <Pressable
-            style={styles.favoriteButton}
-            onPress={addToFavorites}
-          >
-            <Text style={styles.favoriteButtonText}>
-              ❤️ Add to Favorites
-            </Text>
-          </Pressable>
-
-        </View>
+        <WeatherCard
+          weather={weather}
+          onAddFavorite={addToFavorites}
+        />
 
       ) : (
 
@@ -225,57 +168,10 @@ export default function WeatherDashboard() {
 
       )}
 
-      <View style={styles.favoriteContainer}>
-
-        <Text style={styles.sectionTitle}>
-          ❤️ Favorite Cities
-        </Text>
-
-        {favorites.length === 0 ? (
-
-          <Text style={styles.favoriteText}>
-            No favorite cities yet.
-          </Text>
-
-        ) : (
-
-          favorites.map((favorite, index) => (
-
-            <View
-              key={index}
-              style={styles.favoriteItem}
-            >
-
-              <View>
-                <Text style={styles.favoriteCity}>
-                  {favorite.city}
-                </Text>
-
-                <Text style={styles.favoriteCountry}>
-                  {favorite.country}
-                </Text>
-
-                <Text style={styles.favoriteTemperature}>
-                  {favorite.temperature}°C
-                </Text>
-              </View>
-
-              <Pressable
-                style={styles.removeButton}
-                onPress={() => removeFavorite(favorite.city)}
-              >
-                <Text style={styles.removeButtonText}>
-                  REMOVE
-                </Text>
-              </Pressable>
-
-            </View>
-
-          ))
-
-        )}
-
-      </View>
+      <FavoriteList
+        favorites={favorites}
+        onRemove={removeFavorite}
+      />
 
       <StatusBar style="auto" />
 
