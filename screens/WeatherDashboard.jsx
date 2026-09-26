@@ -18,6 +18,34 @@ export default function WeatherDashboard() {
     fetchWeather('Manila');
   }, []);
 
+  const getWeatherCondition = (code) => {
+    if (code === 0) {
+      return 'Clear Sky';
+    }
+
+    if (code >= 1 && code <= 3) {
+      return 'Cloudy';
+    }
+
+    if (code >= 45 && code <= 48) {
+      return 'Foggy';
+    }
+
+    if (code >= 51 && code <= 67) {
+      return 'Rain';
+    }
+
+    if (code >= 71 && code <= 86) {
+      return 'Snow';
+    }
+
+    if (code >= 95 && code <= 99) {
+      return 'Thunderstorm';
+    }
+
+    return 'Unknown';
+  };
+
   const fetchWeather = async (cityName) => {
     try {
       setLoading(true);
@@ -46,13 +74,15 @@ export default function WeatherDashboard() {
 
       const weatherData = await weatherResponse.json();
 
+      const weatherCode = weatherData.current.weather_code;
+
       setWeather({
         city: location.name,
         country: location.country,
         temperature: weatherData.current.temperature_2m,
         humidity: weatherData.current.relative_humidity_2m,
         wind: weatherData.current.wind_speed_10m,
-        weatherCode: weatherData.current.weather_code,
+        condition: getWeatherCondition(weatherCode),
       });
     } catch (error) {
       console.log('Weather Error:', error);
@@ -74,6 +104,7 @@ export default function WeatherDashboard() {
     <View style={styles.container}>
 
       <View style={styles.header}>
+
         <Text style={styles.title}>
           GLOBAL WEATHER
         </Text>
@@ -81,6 +112,7 @@ export default function WeatherDashboard() {
         <Text style={styles.subtitle}>
           Live Weather Dashboard
         </Text>
+
       </View>
 
       <View style={styles.searchContainer}>
@@ -126,16 +158,16 @@ export default function WeatherDashboard() {
             {weather.temperature}°C
           </Text>
 
+          <Text style={styles.condition}>
+            {weather.condition}
+          </Text>
+
           <Text style={styles.info}>
             💧 Humidity: {weather.humidity}%
           </Text>
 
           <Text style={styles.info}>
             💨 Wind: {weather.wind} km/h
-          </Text>
-
-          <Text style={styles.info}>
-            Weather Code: {weather.weatherCode}
           </Text>
 
         </View>

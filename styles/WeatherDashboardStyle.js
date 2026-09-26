@@ -172,6 +172,12 @@ const styles = StyleSheet.create({
     color: '#e53935',
     fontSize: 16,
   },
+  condition: {
+  fontSize: 20,
+  fontWeight: 'bold',
+  marginTop: 5,
+},
+
 });
 
 export default styles;
